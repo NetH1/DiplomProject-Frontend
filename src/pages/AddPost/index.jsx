@@ -8,6 +8,7 @@ import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { axiosUrl } from '../../API';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { enqueueSnackbar } from 'notistack';
 
 export const AddPost = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export const AddPost = () => {
       : await axiosUrl.post('/posts', postData)
       navigate('/');
     } catch (error) {
-      alert(error)
+      enqueueSnackbar({message:"Не удалось создать пост!", variant:"error", autoHideDuration:2000})
     }
   };
 

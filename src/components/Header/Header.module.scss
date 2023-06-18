@@ -38,3 +38,23 @@
     text-decoration: none;
   }
 }
+
+
+@media(max-width: 768px) {
+  .burger_icon {
+    display: block;
+  }
+  .buttons{
+    display: none;
+  }
+}
+@media(min-width: 769px) {
+  .root{
+    .burger_icon {
+      display: none;
+    }
+  }
+  .buttons{
+    display: block;
+  }
+}

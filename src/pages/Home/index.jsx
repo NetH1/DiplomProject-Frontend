@@ -1,15 +1,13 @@
 import React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import styles from './home.module.scss'
+
 import Grid from '@mui/material/Grid';
-
-import { Post } from '../components/Post';
-import { TagsBlock } from '../components/TagsBlock';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, fetchTags } from '../store/PostsSlice';
 import { Link } from 'react-router-dom';
+import { fetchPosts, fetchTags } from '../../store/PostsSlice';
+import { Post, TagsBlock } from '../../components';
 
-export const Home = () => {
+export const Home = ({variant = 'home'}) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user);
   const { posts, tags } = useSelector(state => state.posts);
@@ -22,12 +20,12 @@ export const Home = () => {
   }, []);
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Link to={'/'}><Tab label="Новые" /></Link>
-        <Link to={'/popular'}><Tab label="Популярные" /></Link>
-      </Tabs>
+      <div className={styles.div_buttons}>
+        <button className={styles.button}><Link className={` ${styles.link} ${variant === 'home' ? styles.active : '' } `} to={'/'}>Новые</Link></button>
+        <button className={styles.button}><Link className={styles.link} to={'/popular'}>Популярные</Link></button>
+      </div>
       <Grid container spacing={4}>
-        <Grid xs={8} item>
+        <Grid xs={12} sm={8} md={8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((item, index) => isPostsLoading
             ? <Post key={index} isLoading={true} />
             : (
@@ -45,7 +43,7 @@ export const Home = () => {
             )
           )}
         </Grid>
-        <Grid xs={4} item>
+        <Grid className={styles.mobile} xs={4} item>
           <TagsBlock key={tags} items={tags.items} isLoading={isTagsLoading} />
         </Grid>
       </Grid>

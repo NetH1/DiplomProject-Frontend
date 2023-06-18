@@ -12,7 +12,6 @@ function App() {
   useEffect(() => {
     dispatch(fetchAuthMe())
   }, []);
-  const window_width = window.innerWidth
   return (
     <>
       <Header />

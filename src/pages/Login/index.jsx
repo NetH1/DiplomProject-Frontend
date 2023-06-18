@@ -9,9 +9,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAuthLogin } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 export const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // const name = useSelector(state => state.name);
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({
@@ -24,9 +25,10 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
    const data = await dispatch(fetchAuthLogin(values));
-    if(!data.payload) return alert('Не удалось авторизоваться!');
+    if(!data.payload) return enqueueSnackbar({message:"Не удалось авторизоваться!", variant:"error", autoHideDuration:2000});
     if('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
+      enqueueSnackbar({message:"Вы успешно вошли!", variant:"success", autoHideDuration:2000});
       navigate('/');
     }
   }

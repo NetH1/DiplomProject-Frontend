@@ -4,6 +4,7 @@ import { axiosUrl } from '../../API';
 import { useSelector } from 'react-redux';
 import { Button, Paper, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { MyPosts } from '../../components/MyPosts';
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -62,7 +63,8 @@ const MyProfile = () => {
   }, [user]);
 
   return (
-    <Paper style={{ padding: 30 }}>
+    <>
+      <Paper style={{ padding: 30 }}>
       <form className={styles.wrapper} onSubmit={onSubmit} encType="multipart/form-data">
         <div className={styles.profile_info}>
           {isEdit ? (
@@ -92,6 +94,11 @@ const MyProfile = () => {
         )}
       </form>
     </Paper>
+
+    <div style={{background:'#fff'}}>
+      <MyPosts />
+    </div>
+    </>
   );
 };
 

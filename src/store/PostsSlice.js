@@ -11,6 +11,13 @@ export const fetchPosts = createAsyncThunk(
     }
 );
 
+export const fetchMyPosts = createAsyncThunk(
+    'posts/fetchMyPosts', async () => {
+        const { data } = await axiosUrl.get('/myposts');
+        return data;
+    }
+);
+
 export const fetchPopularPosts = createAsyncThunk(
     'posts/fetchPopularPosts', async () => {
         const { data } = await axiosUrl.get('/posts');
@@ -67,7 +74,7 @@ const initialState = {
     postsTag: {
         items: [],
         status: 'loading'
-    }
+    },
 };
 
 
@@ -86,6 +93,11 @@ const PostsSlice = createSlice({
             state.posts.items = [];
         },
         [fetchPosts.fulfilled]: (state, action) => {
+            state.posts.status = 'loaded';
+            state.posts.items = action.payload;
+        },
+
+        [fetchMyPosts.fulfilled]: (state, action) => {
             state.posts.status = 'loaded';
             state.posts.items = action.payload;
         },

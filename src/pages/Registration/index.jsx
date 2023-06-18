@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { fetchAuthRegister } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { enqueueSnackbar } from 'notistack';
 
 export const Registration = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const Registration = () => {
     if (!data.payload) return alert('Не удалось зарегистрироваться!');
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
+      enqueueSnackbar({message:"Вы успешно зарегистрировались!", variant:"success", autoHideDuration:2000});
       navigate('/');
     }
   }
