@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LogOut } from '../../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
@@ -18,6 +18,7 @@ import { Button } from '@mui/material';
 
 const BurgerMenu = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -33,7 +34,7 @@ const BurgerMenu = () => {
             enqueueSnackbar({ message: "Вы успешно вышли!", variant: "success", autoHideDuration: 2000 });
             window.localStorage.removeItem('token');
             setAnchorEl(null);
-            window.location.href('/');
+            navigate('/');
         }
     };
     return (
